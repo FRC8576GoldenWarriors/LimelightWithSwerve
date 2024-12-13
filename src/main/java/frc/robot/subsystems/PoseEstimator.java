@@ -25,7 +25,7 @@ public class PoseEstimator extends SubsystemBase {
     private Field2d field;
     public PoseEstimator(){
     field = new Field2d();
-    SmartDashboard.putData("GWRField",field);
+    //SmartDashboard.putData("GWRField",field);
     drivetrain = Drivetrain.getInstance();
     
 

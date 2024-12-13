@@ -73,16 +73,16 @@ public class AprilTagStats extends SubsystemBase {
         m_photonPoseEstimator = new PhotonPoseEstimator(m_layout, PoseStrategy.CLOSEST_TO_LAST_POSE, m_arduCam, m_robotToCam);
     }
     public AprilTagStats(String cameraName, String publishName, String tabName) {
-        m_publisher = NetworkTableInstance.getDefault().getStructTopic(publishName, Pose3d.struct).publish();
-        m_tab = Shuffleboard.getTab(tabName);
-        m_arduCam = new PhotonCamera(cameraName);
-        m_yawEntry = m_tab.add("yaw", m_yaw).getEntry();
-        m_pitchEntry = m_tab.add("pitch", m_pitch).getEntry();
-        m_idEntry = m_tab.add("id", m_id).getEntry();
-        m_distanceEntry = m_tab.add("distance", m_distance).getEntry();
-        m_tagStatusEntry = m_tab.add("Tag In View", m_tagStatus).getEntry();
+        //m_publisher = NetworkTableInstance.getDefault().getStructTopic(publishName, Pose3d.struct).publish();
+        //m_tab = Shuffleboard.getTab(tabName);
+        //m_arduCam = new PhotonCamera(cameraName);
+        ////m_yawEntry = m_tab.add("yaw", m_yaw).getEntry();
+        ////_pitchEntry = m_tab.add("pitch", m_pitch).getEntry();
+        //m_idEntry = m_tab.add("id", m_id).getEntry();
+        //m_distanceEntry = m_tab.add("distance", m_distance).getEntry();
+        //m_tagStatusEntry = m_tab.add("Tag In View", m_tagStatus).getEntry();
         
-        m_photonPoseEstimator = new PhotonPoseEstimator(m_layout, PoseStrategy.CLOSEST_TO_LAST_POSE, m_arduCam, m_robotToCam);
+        //m_photonPoseEstimator = new PhotonPoseEstimator(m_layout, PoseStrategy.CLOSEST_TO_LAST_POSE, m_arduCam, m_robotToCam);
     }
 
     private PhotonTrackedTarget getTarget() {
