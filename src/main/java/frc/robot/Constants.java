@@ -30,7 +30,33 @@ public final class Constants {
   // public Constants(){
   //   checkPracticeMode(isPractice);
   // }
+
+
   public static class VisionConstants {
+    public static class limeLightDistanceConstants{
+      public static final double OPTIMAL_SHOOTING_DISTANCE = 2.0;
+      public static final double ALLOWED_ANGLE_ERROR = 2.0;
+      public static final double ALLOWED_DISTANCE_ERROR = 0.1;
+    }
+
+    // In meters and degrees
+    // change later once we get true mesurements
+    public static class limeLightDimensionConstants{
+      public static final double CAMERA_HEIGHT = 0.5;  
+      public static final double TARGET_HEIGHT = 2.0; // hight of the speaker
+      public static final double CAMERA_PITCH = 30.0;
+    }
+
+    public static class aprilTagIDConstants{
+      public static final int RED_SPEAKER_TAG_ID = 7;
+      public static final int BLUE_SPEAKER_TAG_ID = 4;
+    }
+
+   public static class limelightNetworkTableKey{
+    public static final String LIMELIGHT_NETWORKTABLE_KEY = "limelight-miracle";
+   }
+
+
     public static class cameraTranslationConstants {
       //translation of camera in meters (change when camera has been mounted on robot)
       public static final double tX = -32 * 0.01;
