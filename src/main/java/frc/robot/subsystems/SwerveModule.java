@@ -4,17 +4,22 @@
 
 package frc.robot.subsystems;
 import com.ctre.phoenix6.hardware.CANcoder;
+import com.ctre.phoenix6.hardware.Pigeon2;
 import com.revrobotics.CANSparkBase.IdleMode;    //com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.drivers.PearadoxSparkMax;
+import frc.robot.Constants;
 import frc.robot.Constants.SwerveConstants;
 
 public class SwerveModule extends SubsystemBase {
@@ -33,9 +38,13 @@ private int driveMotorId;
   private double absoluteEncoderOffset;
   private Rotation2d lastAngle;
 
+ 
+
   /** Creates a new SwerveModule. */
   public SwerveModule(int driveMotorId, int turnMotorId, boolean driveMotorReversed, boolean turnMotorReversed,
     int absoluteEncoderId, double absoluteEncoderOffset) {
+
+
       this.absoluteEncoderOffset = absoluteEncoderOffset;
 
       this.turnMotorId = turnMotorId;
@@ -57,6 +66,7 @@ private int driveMotorId;
       lastAngle = getState().angle;
   }
 
+  
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

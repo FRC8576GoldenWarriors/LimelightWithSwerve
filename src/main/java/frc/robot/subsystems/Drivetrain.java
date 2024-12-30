@@ -27,6 +27,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.Constants.SwerveConstants;
 
 public class Drivetrain extends SubsystemBase {
@@ -144,6 +145,9 @@ public class Drivetrain extends SubsystemBase {
     );
 
 
+    
+
+
     SmartDashboard.putData("Swerve Drive", new Sendable() {
       @Override
       public void initSendable(SendableBuilder builder){
@@ -165,6 +169,9 @@ public class Drivetrain extends SubsystemBase {
       }
     });
   }
+
+
+  
 
   @Override
   public void periodic() {
@@ -260,6 +267,30 @@ public class Drivetrain extends SubsystemBase {
     m_ModuleStatePublisherIn.set(getModuleStates());
 
   }
+
+
+  public void drive (Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLooop){
+    ChassisSpeeds chassisSpeeds;
+    if(fieldRelative) {
+      chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(translation.getX(), translation.getY(), rotation, getGyroscopeRotation());
+    } else {
+      chassisSpeeds = new ChassisSpeeds(translation.getX(), translation.getY(), rotation);
+    }
+
+    SwerveModuleState[] moduleStates = SwerveConstants.DRIVE_KINEMATICS.toSwerveModuleStates(chassisSpeeds);
+    SwerveDriveKinematics.desaturateWheelSpeeds(moduleStates, Constants.SwerveConstants.DRIVETRAIN_MAX_SPEED);
+
+    leftFront.setDesiredState(moduleStates[0]);
+    rightFront.setDesiredState(moduleStates[1]);
+
+    leftBack.setDesiredState(moduleStates[2]);
+    rightBack.setDesiredState(moduleStates[3]);
+  }
+
+  public Rotation2d getGyroscopeRotation() {
+    return Rotation2d.fromDegrees(gyro.getYaw().getValue());
+  }
+
 
   public void setAllIdleMode(boolean brake){
     if(brake){

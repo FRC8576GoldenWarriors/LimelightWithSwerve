@@ -14,7 +14,11 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.AdjustRobotPos;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController; // if using Xbox controller
+import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;    // for other controllers
+import frc.robot.commands.AlignToSpeaker;
 import frc.robot.commands.Climb;
 import frc.robot.commands.ClimbDown;
 import frc.robot.commands.FFShooterAngle;
@@ -42,12 +46,14 @@ import frc.robot.subsystems.PoseEstimator;
 import frc.robot.subsystems.RainbowLEDPattern;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.ShooterRoller;
+import frc.robot.subsystems.Limelight.SpeakerAllignment;
 
 
 
 public class RobotContainer {
 
   public static final Drivetrain drivetrain = Drivetrain.getInstance();
+  public final SpeakerAllignment speakerAllignment = new SpeakerAllignment(drivetrain);
 
 
   public static final Intake m_Intake = new Intake();
@@ -67,6 +73,8 @@ public class RobotContainer {
 
   private final JoystickButton resetHeading_Start = new JoystickButton(driverController.getHID(), XboxController.Button.kStart.value);
 
+  private Command AlignToSpeaker = new AlignToSpeaker(speakerAllignment);
+
   public RobotContainer() {
 
     ledStrip = new PhyscialLEDStrip(9, 58); //58
@@ -80,6 +88,11 @@ public class RobotContainer {
   private void configureBindings() {
     
     //Driver controller
+
+
+    // This command will execute whenever the d-pad up button is pressed
+    driverController.povUp().and(() -> speakerAllignment.hasValidTargets()).onTrue(AlignToSpeaker);
+
     resetHeading_Start.onTrue(
       new InstantCommand(drivetrain::zeroHeading, drivetrain));
 

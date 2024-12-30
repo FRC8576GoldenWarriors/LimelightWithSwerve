@@ -8,13 +8,14 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.LimelightHelpers;
 
 public class AprilTagStatsLimelight extends SubsystemBase {
 
     
 
-    public NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight-miracle");
+    public static NetworkTable table = NetworkTableInstance.getDefault().getTable(Constants.VisionConstants.limelightNetworkTableKey.LIMELIGHT_NETWORKTABLE_KEY);
     //constructor
     public void Stats() {
         
@@ -43,10 +44,26 @@ public class AprilTagStatsLimelight extends SubsystemBase {
 
         updateValues(x, y, area, id);
     }
+
+    public static double getTX(){
+        return table.getEntry("tx").getDouble(0.0);
+    }
+
+    public static double getTY(){
+        return table.getEntry("ty").getDouble(0.0);
+    }
     
-    public boolean hasValidTargets(){
+    public static boolean hasValidTargets(){
         return table.getEntry("tv").getDouble(0) == 1;
     } 
+
+    public static double getArea() {
+        return table.getEntry("ta").getDouble(0.0);
+    }
+
+    public static double getID(){
+        return table.getEntry("tid").getDouble(0.0);
+    }
 
     public Pose3d getBotPose() {
         double[] botpose = table.getEntry("botpose").getDoubleArray(new double[6]);
